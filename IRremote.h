@@ -277,6 +277,7 @@ class IRsend
 		//......................................................................
 #		if SEND_NEC
 			void  sendNEC        (unsigned long data,  int nbits) ;
+			void  sendNEC       (byte data[],  int nbits);
 #		endif
 		//......................................................................
 #		if SEND_SONY

@@ -43,6 +43,32 @@ void  IRsend::sendNEC (unsigned long data,  int nbits)
 	mark(NEC_BIT_MARK);
 	space(0);  // Always end with the LED off
 }
+
+void  IRsend::sendNEC (byte data[],  int nbits)
+{
+	// Set IR carrier frequency
+	enableIROut(38);
+
+	// Header
+	mark(NEC_HDR_MARK);
+	space(NEC_HDR_SPACE);
+
+	// Data
+	for (int i = 0; i < nbits; i++) {
+		if (data[i/8] & (B1 << (7 - (i % 8)))) {
+			mark(NEC_BIT_MARK);
+			space(NEC_ONE_SPACE);
+		} else {
+			mark(NEC_BIT_MARK);
+			space(NEC_ZERO_SPACE);
+		}
+	}
+
+	// Footer
+	mark(NEC_BIT_MARK);
+	space(0);  // Always end with the LED off
+}
+
 #endif
 
 //+=============================================================================
